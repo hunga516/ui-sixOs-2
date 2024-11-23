@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý bệnh nhân</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Tiếp nhận bệnh nhân</h1>
+            <div class="header-info">
+                <span> Âu Quế Khanh</span>
+                <span>1946</span>
+                <span>Nữ</span>
+            </div>
+        </header>
+
+        <nav class="tabs-container">
+            <button class="tab active" data-tab="1">Danh sách bệnh nhân</button>
+            <button class="tab" data-tab="2">Danh sách trong ngày</button>
+            <button class="tab" data-tab="3">Quản lý thông tin</button>
+            <button class="tab" data-tab="4">Quản lý công việc</button>
+        </nav>
+
+        <div class="tab-content-container">
+            <!-- Tab 1: Danh sách bệnh nhân -->
+            <div id="tab-content-1" class="tab-content active">
+                <!-- Bộ lọc tìm kiếm -->
+                <div class="filters">
+                    <label for="ngay-den">Ngày đến:</label>
+                    <input type="date" id="ngay-den" value="2024-11-20">
+                    <label for="loai-benh"> Mã BN:</label>
+                    <input type="text" id="ma-bn">
+                    <label for="tim-kiem">Tên BN:</label>
+                    <input type="text" id="ten-bn">
+                    <label for="tim-kiem">Phòng điều trị</label>
+                    <select id="tim-kiem">
+                        <option value="tim-mach">P. Tim Mạch</option>
+                        <option value="xuong-khop">P. Xương Khớp</option>
+                    </select>                    
+                    <button>Tìm kiếm</button>
+                    <button id="export-pdf">PDF</button>
+                    <button id="export-excel">Excel</button>
+                </div>
+
+                <!-- Bảng danh sách bệnh nhân -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên bệnh nhân</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Phòng</th>
+                            <th>Ngày đến gần nhất</th>
+                            <th>Hạng thẻ</th>
+                            <th>Địa chỉ</th>
+                            <th>Trạng thái</th>
+                            <th>Tác vụ </th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Âu Quế Khanh</td>
+                            <td>Nữ</td>
+                            <td>20/11/2024</td>
+                            <td>Phòng Tim Mạch</td>
+                            <td>10/11/2024</td>
+                            <td> VIP </td>
+                            <td> HCM </td>
+                            <td><span class="status">Đang chờ</span></td>
+                            <td><button class="view-btn">Xem</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tab 2: Danh sách trong ngày -->
+            <div id="tab-content-2" class="tab-content">
+                <h2>Thông tin các bệnh nhân nhập viện trong ngày</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên bệnh nhân</th>
+                            <th>Ngày đến</th>
+                            <th>Loại bệnh</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Trần Văn B</td>
+                            <td>2024-11-20</td>
+                            <td>Viêm họng</td>
+                            <td><span class="status">Đang điều trị</span></td>
+                            <td><button class="view-btn">Xem</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tab 3: Quản lý thông tin bệnh nhân -->
+            <div id="tab-content-3" class="tab-content">
+                <h2>Thông tin bệnh nhân</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="ten-bn">Tên bệnh nhân:</label>
+                        <input type="text" id="ten-bn">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngay-sinh">Ngày sinh:</label>
+                        <input type="date" id="ngay-sinh">
+                    </div>
+                    <div class="form-group">
+                        <label for="dia-chi">Địa chỉ:</label>
+                        <input type="text" id="dia-chi">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Lưu</button>
+                        <button type="reset">Hủy</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tab 4: Quản lý công việc -->
+            <div id="tab-content-4" class="tab-content">
+                <h2>Thông tin công việc</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="cong-viec">Công việc:</label>
+                        <input type="text" id="cong-viec">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngay-hoan-thanh">Ngày hoàn thành:</label>
+                        <input type="date" id="ngay-hoan-thanh">
+                    </div>
+                    <button type="button">Quét QR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const targetTab = tab.getAttribute('data-tab');
+
+                tabContents.forEach(content => {
+                    if (content.id === `tab-content-${targetTab}`) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
