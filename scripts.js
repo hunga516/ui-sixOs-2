@@ -1,3 +1,12 @@
+const inputDate = document.getElementById("ngay-sinh");
+
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const day = String(today.getDate()).padStart(2, '0');
+
+inputDate.value = `${year}-${month}-${day}`;
+
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', function () {
@@ -33,4 +42,3 @@ document.querySelectorAll('.view-btn').forEach(button => {
     document.querySelector('#tab-content-3').classList.add('active');
   });
 });
-

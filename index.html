@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý bệnh nhân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 </head>
 
 <body>
@@ -30,21 +37,33 @@
             <!-- Tab 1: Danh sách bệnh nhân -->
             <div id="tab-content-1" class="tab-content active">
                 <!-- Bộ lọc tìm kiếm -->
-                <div class="filters">
-                    <label for="ngay-den">Ngày đến:</label>
-                    <input type="date" id="ngay-den" value="2024-11-20">
-                    <label for="loai-benh"> Mã BN:</label>
-                    <input type="text" id="ma-bn">
-                    <label for="tim-kiem">Tên BN:</label>
-                    <input type="text" id="ten-bn">
-                    <label for="tim-kiem">Phòng điều trị</label>
-                    <select id="tim-kiem">
-                        <option value="tim-mach">P. Tim Mạch</option>
-                        <option value="xuong-khop">P. Xương Khớp</option>
-                    </select>                    
-                    <button>Tìm kiếm</button>
-                    <button id="export-pdf">PDF</button>
-                    <button id="export-excel">Excel</button>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <label for="ngay-den">Ngày đến:</label>
+                        <input type="date" id="ngay-den" value="2024-11-20">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="loai-benh"> Mã BN:</label>
+                        <input type="text" id="ma-bn">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="tim-kiem">Tên BN:</label>
+                        <input type="text" id="ten-bn">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="tim-kiem">Phòng điều trị:</label>
+                        <select id="tim-kiem" class="p-2">
+                            <option value="tim-mach">P. Tim Mạch</option>
+                            <option value="xuong-khop">P. Xương Khớp</option>
+                        </select>
+                    </div>
+                    <button class="p-2 ring-1 ring-slate-400 ml-[-10px]">
+                        <img src="./assets/img/search.png" class="w-4" alt="">
+                    </button>
+                    <div class="ml-auto">
+                        <button id="export-pdf" class="px-2 py-1 text-white">PDF</button>
+                        <button id="export-excel" class="px-2 py-1 text-white">Excel</button>
+                    </div>
                 </div>
 
                 <!-- Bảng danh sách bệnh nhân -->
@@ -61,7 +80,7 @@
                             <th>Địa chỉ</th>
                             <th>Trạng thái</th>
                             <th>Tác vụ </th>
-                        
+
                         </tr>
                     </thead>
                     <tbody>
@@ -75,7 +94,7 @@
                             <td> VIP </td>
                             <td> HCM </td>
                             <td><span class="status">Đang chờ</span></td>
-                            <td><button class="view-btn">Xem</button></td>
+                            <td><button class="view-btn">Xem</button></td>-
                         </tr>
                     </tbody>
                 </table>
@@ -110,23 +129,33 @@
 
             <!-- Tab 3: Quản lý thông tin bệnh nhân -->
             <div id="tab-content-3" class="tab-content">
-                <h2>Thông tin bệnh nhân</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="ten-bn">Tên bệnh nhân:</label>
-                        <input type="text" id="ten-bn">
+                <h2 class="text-slate-800 font-semibold">Thông tin bệnh nhân</h2>
+                <form method="post" action="" class="mt-6">
+                    <div class="grid grid-cols-4 gap-x-4 gap-y-12">
+                        <div class="form-group flex flex-col">
+                            <label for="ten-bn">Tên bệnh nhân</label>
+                            <input name="name" type="text" id="ten-bn">
+                        </div>
+                        <div class="form-group flex flex-col">
+                            <label for="ngay-sinh">Ngày sinh</label>
+                            <input type="text" id="ngay-sinh" class="datepicker" placeholder="dd-mm-yyyy">
+                        </div>
+                        <div class="form-group flex flex-col">
+                            <label for="dia-chi">Địa chỉ</label>
+                            <input name="address" type="text" id="dia-chi">
+                        </div>
+                        <div class="form-group flex flex-col">
+                            <label for="type">Đối tượng KH</label>
+                            <select name="type" id="type" class="p-2 font-base">
+                                <option value="1">VIP</option>
+                                <option value="2">Thân thiết</option>
+                                <option value="3">Bình thường</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ngay-sinh">Ngày sinh:</label>
-                        <input type="date" id="ngay-sinh">
-                    </div>
-                    <div class="form-group">
-                        <label for="dia-chi">Địa chỉ:</label>
-                        <input type="text" id="dia-chi">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit">Lưu</button>
-                        <button type="reset">Hủy</button>
+                    <div class="flex gap-2 items-center">
+                        <button type="submit" class="px-2 py-1 text-white font-medium bg-blue-500">Lưu</button>
+                        <button type="reset" class="px-2 py-1 text-white font-medium bg-red-500">Hủy</button>
                     </div>
                 </form>
             </div>
@@ -135,11 +164,11 @@
             <div id="tab-content-4" class="tab-content">
                 <h2>Thông tin công việc</h2>
                 <form>
-                    <div class="form-group">
+                    <div class="form-group ">
                         <label for="cong-viec">Công việc:</label>
                         <input type="text" id="cong-viec">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group ">
                         <label for="ngay-hoan-thanh">Ngày hoàn thành:</label>
                         <input type="date" id="ngay-hoan-thanh">
                     </div>
@@ -168,6 +197,12 @@
                 });
             });
         });
+
+        flatpickr("#ngay-sinh", {
+            dateFormat: "d-m-Y",
+            allowInput: true
+        });
+
     </script>
 </body>
 
