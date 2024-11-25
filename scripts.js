@@ -1,13 +1,3 @@
-const inputDate = document.getElementById("ngay-sinh");
-
-const today = new Date();
-const year = today.getFullYear();
-const month = String(today.getMonth() + 1).padStart(2, '0');
-const day = String(today.getDate()).padStart(2, '0');
-
-inputDate.value = `${year}-${month}-${day}`;
-
-
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', function () {
     // Xóa class active của tất cả tab
@@ -42,3 +32,48 @@ document.querySelectorAll('.view-btn').forEach(button => {
     document.querySelector('#tab-content-3').classList.add('active');
   });
 });
+
+
+function handleAddPatient(e) {
+  e.preventDefault();
+  alert("Them thong tin benh nhan thanh cong !")
+}
+
+function formatDate(stringDate) {
+  const [year, month, date] = stringDate.split('-')
+  return `${date}-${month}-${year}`
+}
+
+
+async function renderPatientsTable() {
+  const response = await fetch('http://localhost:5106/api/Patient/Read')
+  const json = await response.json()
+  const data = json.value
+  console.log(data);
+
+
+  const tableBody = document.querySelector('#tableRender tbody');
+  tableBody.innerHTML = '';
+
+  data.forEach((patient, index) => {
+    const row = document.createElement('tr');
+
+    const dob = formatDate(patient.dob)
+
+    row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${patient.name}</td>
+          <td>${dob}</td>
+          <td>${patient.address}</td>
+          <td>${patient.type}</td>
+         <td><span class="status">Đang chờ</span></td>
+         <td><button class="view-btn">Xem</button></td>
+      `;
+
+    tableBody.appendChild(row);
+  });
+}
+
+// Gọi hàm để render dữ liệu
+renderPatientsTable();
+
