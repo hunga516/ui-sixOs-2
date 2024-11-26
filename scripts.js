@@ -66,7 +66,14 @@ async function renderPatientsTable() {
           <td>${dob}</td>
           <td>${patient.address}</td>
           <td>${patient.type}</td>
-         <td><span class="status">Đang chờ</span></td>
+          <td>
+            <select class="status">
+               <option value="dang-cho" class="dang-cho1" >Đang chờ</option>
+               <option value="da-huy" class="da-huy">Đã hủy</option>
+               <option value="dang-dieu-tri" class="dang-dieu-tri">Đang điều trị</option>
+                <option value="hoan-thanh" class="hoan-thanh">Hoàn thành</option>
+            </select>
+         </td>
          <td><button class="view-btn">Xem</button></td>
       `;
 
@@ -76,4 +83,5 @@ async function renderPatientsTable() {
 
 // Gọi hàm để render dữ liệu
 renderPatientsTable();
+
 
